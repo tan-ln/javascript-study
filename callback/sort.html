@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [25, 13, 33, 8, 23, 32];
+        Array.prototype.sort = function (callback) {
+            var arr = this;
+            var i = 0;
+            for (; i < arr.length - 1; i++) {
+                var j = i + 1;
+                for (; j < arr.length; j++) {
+                    if (callback(arr[i], arr[j])) {
+                        var temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            return arr;
+        };
+
+        //a-b>0表示数组从小到大排序
+        arr.sort(function (a, b) {
+            return a - b > 0;
+        });
+        
+        document.write(arr.join(",") + "<br />");//8,13,23,25,32,33
+
+        //b-a>0表示数组从大到小排序
+        arr.sort(function (a, b) {
+            return b - a > 0;
+        });
+
+        document.write(arr.join(","));//33,32,25,23,13,8    
+    </script>
+</body>
+
+</html>

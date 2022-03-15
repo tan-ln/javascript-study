@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>小家</title>
+</head>
+
+<body>
+    <div id="user">
+        <img src="" alt="" id="avatar" style="width: 30%; height: 30%;">
+        <p id="username"></p>
+
+        <form action="#" name="userForm">
+            <div class="filed">
+                <label for="avatarInput">头像</label>
+                <input type="text" name="avatar" id="avatarInput">
+            </div>
+            <div class="filed">
+                <label for="nicknameInput">昵称</label>
+                <input type="text" name="nickname" id="nicknameInput">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const user_id = 10001
+            const URL = "https://www.easy-mock.com/mock/5adf11035cbcb66de34da639/students/userInfo#!method=get"
+
+            function getUserInfo(uid, ...fn) {
+                // console.log(fn)
+                // return;
+                fetch(URL)
+                    .then(data => data.json())
+                    .then(data => {
+                        // 先做其他事情？
+                        // 通过函数传参
+                        
+                        // fn.forEach(func => {
+                        //     func(data.data)
+                        // })
+
+                        for (const func of fn) {
+                            // console.log(func)
+                            func(data.data)
+                        }
+                    })
+            }
+
+            function renderUserInfo(user) {
+                document.querySelector('#avatar').src = user.avatar || ''
+                document.querySelector('#username').innerHTML = user.nickname || '未命名'
+            }
+
+            function renderUserForm(user) {
+                const oForm = document.forms['userForm']
+                const avatarInput = oForm['avatar']
+                const nicknameInput = oForm['nickname']
+
+                avatarInput.value = user.avatar
+                nicknameInput.value = user.nickname
+            }
+            
+            getUserInfo(user_id, renderUserInfo, renderUserForm)
+
+        }
+    </script>
+</body>
+
+</html>

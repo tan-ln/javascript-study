@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>懒加载图片</title>
+</head>
+<body>
+    <!-- 网页在渲染的时候
+    http 请求数量
+    Chrome 性能最好，同时并发的请求数几十个
+    src 会下载图片
+    将图片下载放到 dom ready 事件之后
+    将有效提升网页打开速度
+    使用占位图片
+    优化前 ：n 张图片 URL不一样 http请求数是 n
+    优化后 ：图片上的数量只有 1 如果URL 一样，不会重复发送 -->
+
+    <img class="pic" src="http://static.youku.com/yk/vmanage/img/manage/video/mask.d53611efc6.png" 
+    origin_src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525427527905&di=76d53abeefda32655f62765ea417052f&imgtype=0&src=http%3A%2F%2Fuploads.gz2010.cn%2Fallimg%2F1708%2F37-1FP1144225-50.jpg" alt="">
+
+    <img class="pic"
+    src="http://static.youku.com/yk/vmanage/img/manage/video/mask.d53611efc6.png" origin_src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2832059972,3305489552&fm=27&gp=0.jpg" alt="">
+
+    <img class="pic" src="http://static.youku.com/yk/vmanage/img/manage/video/mask.d53611efc6.png" 
+    origin_src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525428213570&di=762e128929211c20fc395287f16f2e09&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20161224%2F1f9d811c3d9f4d4db34e1ef19b4efdfa_th.jpg" alt="">
+
+    <script src="./lazyload.js"></script>
+
+    <script>
+        // 已经是用户看到网页了，dom ready 完成
+        // 优化图片下载 将其推后
+        // window.onload = function() {
+        //     // 在页面打开后 重新下载图片
+        //     const img = document.querySelector('.pic1');
+        //     // origin_src 自定义属性
+        //     const url = img.getAttribute('origin_src');
+        //     // console.log(url);
+        //     // img.setAttribute('src', url)
+        //     // img.src = url;
+        //     const oImg = document.createElement('img');
+        //     oImg.style.display = 'none';
+        //     document.body.appendChild(oImg);
+
+        //     oImg.onload = function() {
+        //         // 幕后工作者 已经下载了图片
+        //         // URL 一旦下载，就会在浏览器缓存(静态)文件
+        //         img.src = url;
+        //     }
+
+        //     // 图片的下载是异步的 图片有大小
+        //     oImg.src = url;
+
+        // }
+    </script>
+
+    <script>
+        window.onload = function() {
+            // 懒加载图片
+            const imgs = document.querySelectorAll('.pic')
+            // LazyLoadImage.setSrc(imgs[0])
+            for (const img in imgs) {
+                // LazyLoadImage.setSrc(imgs[img])
+                console.log(imgs[img])
+            }
+            
+        }
+    </script>
+</body>
+</html>

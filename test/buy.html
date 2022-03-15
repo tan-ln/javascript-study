@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="sel_color">
+        选择颜色：
+        <select class="sel_color" onchange="changeColor()">
+            <option value="blue" class="blue">蓝色</option>
+            <option value="red" class="red">红色</option>
+        </select>
+    </label>
+    <label for="buy_num">
+        输入购买数量
+        <input type="text" name="buy_num" id="buy_num" onkeyup="changeNum()">
+    </label>
+    <div class="result">
+        <div class="res_col">
+            您选择了颜色：
+            <p></p>
+        </div>
+        <div class="res_num">
+            您输入了数量：
+            <p></p>
+        </div>
+    </div>
+    <input type="button" class="check" value="请输入正确的购买数量" disabled="disabled" />
+</body>
+<script>
+    var phone = {
+        blue: 6,
+        red: 4
+    }
+    //   select  onchange 事件 数量不写，
+    //   提交按钮会禁用 disabled  先禁用, 再启用.
+    //   红色  当数量为5  oninput 事件 onchange  按钮数据不足，disabled
+    //   蓝色  当数量5 时  加入购物车. 
+
+    var color = document.querySelector('.sel_color')
+    var num = document.querySelector('#buy_num')
+    var pc = document.querySelector('.res_col>p')
+    var pn = document.querySelector('.res_num>p')
+    var check = document.querySelector('.check')
+
+    if (color.value == 'blue') pc.innerHTML = '蓝色'
+
+    function changeColor() {
+        // alert(color.value)
+        if (color.value == 'blue') {
+            pc.innerHTML = '蓝色'
+        } else {
+            pc.innerHTML = '红色'
+        }
+        
+
+    }
+    function changeNum() {
+        pn.innerHTML = num.value
+
+        if (num.value == '') {
+            check.value = '请输入正确的购买数量'
+        }
+
+        if (color.value == 'blue') {
+            if (num.value > phone.blue) {
+                check.value = '库存不足'
+                check.setAttribute('disabled','disabled')
+            } else {
+                check.value = '加入购物车'
+                check.removeAttribute('disabled')
+            }
+        }
+        if (color.value == 'red') {
+            if (num.value > phone.red) {
+                check.value = '库存不足'
+                check.setAttribute('disabled','disabled')
+            } else {
+                check.value = '加入购物车'
+                check.removeAttribute('disabled')
+            }
+        }
+    }
+
+</script>
+
+</html>

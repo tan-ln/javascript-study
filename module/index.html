@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.method = function (name, func) {
+            this.prototype[name] = func;
+            return this;
+        }
+
+        String.method('deentityify', function () {
+            // 字符实体表，它映射字符实体的名字到对应的字符
+            var entity = {
+                quot: '"',
+                lt: '<',
+                gt: '>'
+            }
+
+            // 返回 deetityitfy 方法
+            return function () {
+                // 查找 '&' 开头和 ';' 结尾的字符串
+                return this.replace(/&([^&;]+);/g,
+                    function (a, b) {
+                        var r = entity[b];
+                        return typeof r === 'string' ? r : a
+                    }
+                )
+            }
+        }())
+        document.write('&lt;&quot;&gt;'.deentityify())
+        // <">
+    </script>
+</body>
+
+</html>
